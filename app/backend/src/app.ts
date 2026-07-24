@@ -6,7 +6,7 @@ import { Airport } from '@/interfaces/Airport.interface.js';
 import { prisma } from './config/prisma.js';
 
 export class App {
-    public readonly instance: Application;
+    public readonly instance: Application; 
 
     constructor() {
         this.instance = express();
