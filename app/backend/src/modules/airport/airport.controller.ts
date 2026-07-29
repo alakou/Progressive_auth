@@ -26,6 +26,7 @@ export class AirportController {
 
     createNewAiport = async (req: Request, res: Response): Promise<void> => {
         const body: CreateAirportDTO = req.body
+        console.log(body)
         try {
             const airport = await this.airportService.createNewAiport(body)
             res.status(200).json(airport)
