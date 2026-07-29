@@ -155,3 +155,7 @@ Adding tests with Vitest
 Updating .gitignore and licence files
 Commiting with Husky and lint-staged
 Continuous integration with Github Actions
+
+
+##########################################################################################################
+https://eleven-labs.com/blog/clean-architecture/
