@@ -11,7 +11,7 @@ export interface IAirportRepository {
     deleteAirport(id: string): Promise<void>
 }
 
-export interface CreateAirportDTO {
+export interface CreateAirportDTO { 
     iataCode: string,
     name: string,
     city: string,

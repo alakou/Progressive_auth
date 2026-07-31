@@ -4,7 +4,7 @@ import { Airport, IAirportRepository, CreateAirportDTO, UpdateAirportDTO } from 
 
 export class AirportRepository implements IAirportRepository {
     async findAllAirport(): Promise<Airport[]> {
-        return prisma.airport.findMany({ orderBy: { name: "asc" } })
+        return prisma.airport.findMany({ orderBy: { name: "asc" } }) 
     }
     async findAirportByID(id: string): Promise<Airport | null> {
         return prisma.airport.findUnique({ where: { id } })

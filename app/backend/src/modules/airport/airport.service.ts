@@ -1,10 +1,11 @@
+import { ConflictError } from "@/errors/AppError.js";
 import { Airport, IAirportRepository, CreateAirportDTO, UpdateAirportDTO } from "./airport.types.js";
 
 
 export class AirportService {
     private readonly airportRepository: IAirportRepository
 
-    constructor(airportRepository: IAirportRepository) {
+    constructor(airportRepository: IAirportRepository) { 
         this.airportRepository = airportRepository
     }
 
@@ -21,7 +22,7 @@ export class AirportService {
     async createNewAiport(data: CreateAirportDTO): Promise<Airport> {
         const exist = await this.airportRepository.findAirportByIataCode(data.iataCode)
         if (exist) {
-            throw new Error(`Le code IATA ${data.iataCode} est déjà utilisé`);
+            throw new ConflictError(`Le code IATA ${data.iataCode} est déjà utilisé`);
         }
         return this.airportRepository.createAirport(data)
     }
@@ -32,3 +33,4 @@ export class AirportService {
         await this.airportRepository.deleteAirport(id)
     }
 }
+

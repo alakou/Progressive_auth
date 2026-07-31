@@ -9,6 +9,6 @@ export function setAirportRouter(): Router {
     const airportRepository = new AirportRepository()
     const airportService = new AirportService(airportRepository)
     const airportController = new AirportController(airportService)
-
+ 
     return configureAirportRoutes(airportController)
 }
