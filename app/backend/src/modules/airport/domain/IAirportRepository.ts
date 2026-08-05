@@ -1,6 +1,13 @@
-import { Airport } from "../../../generated/prisma/client.js";
+import { Airport } from "./Airport.js";
 
-export type { Airport }
+export interface CreateAirportDTO { 
+    iataCode: string, 
+    name: string,
+    city: string,
+    country: string,
+}
+
+export type UpdateAirportDTO = Partial<CreateAirportDTO>
 
 export interface IAirportRepository {
     findAllAirport(): Promise<Airport[]>,
@@ -10,12 +17,3 @@ export interface IAirportRepository {
     updateAirport(id: string, data: UpdateAirportDTO): Promise<Airport>
     deleteAirport(id: string): Promise<void>
 }
-
-export interface CreateAirportDTO { 
-    iataCode: string,
-    name: string,
-    city: string,
-    country: string,
-}
-
-export type UpdateAirportDTO = Partial<CreateAirportDTO>

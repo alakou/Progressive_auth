@@ -1,12 +1,12 @@
 import compression from 'compression';
 import express, { Application, } from 'express';
-import { setAirportRouter } from './modules/airport/index.js';
-import { setAirlineRouter } from './modules/airline/index.js';
+import { initAirporModule } from './modules/airport/index.js';
+import { initAirlineModule } from './modules/airline/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { pinoHttp } from 'pino-http';
 import { pino_logger } from './config/logger.js';
 export class App {
-    public readonly instance: Application;
+    public readonly instance: Application; 
 
     constructor() {
         this.instance = express();
@@ -16,8 +16,8 @@ export class App {
     }
 
     private configAllAirportRoutes(): void {
-        this.instance.use("/api/airport", setAirportRouter())
-        this.instance.use("/api/airline", setAirlineRouter())
+        this.instance.use("/api/airport", initAirporModule())
+        this.instance.use("/api/airline", initAirlineModule())
     }
 
     private configureMiddlewares(): void {

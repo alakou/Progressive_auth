@@ -11,6 +11,6 @@ export const createAiportShema = z.object({
 
 export type CreateAirportInput = z.infer<typeof createAiportShema>
 
-export const updateAirportInput = createAiportShema.partial()
+export const updateAirportSchema = createAiportShema.partial()
 
-export type UpdateAirportInput = z.infer<typeof updateAirportInput>
+export type UpdateAirportInput = z.infer<typeof updateAirportSchema>
