@@ -42,4 +42,5 @@ export class PrismaAirportRepository implements IAirportRepository {
     async deleteAirport(id: string): Promise<void> {
         await prisma.airport.delete({ where: { id } })
     }
+    // ok
 }
