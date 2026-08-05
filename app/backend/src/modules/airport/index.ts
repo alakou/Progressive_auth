@@ -1,14 +1,28 @@
 import { Router } from "express";
-import { AirportRepository } from "./airport.repository.js";
-import { AirportService } from "./airport.service.js";
-import { AirportController } from "./airport.controller.js";
-import { configureAirportRoutes } from "./airport.routes.js";
+import { PrismaAirportRepository } from "./infrastructure/prisma/PrismaAirportRepository.js";
 
-export function setAirportRouter(): Router {
+import { GetAllAirportsUseCase } from "./application/use-cases/GetAllAirportsUseCase.js";
+import { GetAirportByIdUseCase } from "./application/use-cases/GetAirportByIdUseCase.js";
+import { CreateAirportUseCase } from "./application/use-cases/CreateAirportUseCase.js";
+import { UpdateAirportUseCase } from "./application/use-cases/UpdateAirportUseCase.js";
+import { DeleteAirportUseCase } from "./application/use-cases/DeleteAirportUseCase.js";
 
-    const airportRepository = new AirportRepository()
-    const airportService = new AirportService(airportRepository)
-    const airportController = new AirportController(airportService)
+import { AirportController } from "./presentation/http/AirportController.js";
+import { configureAirportRoutes } from "./presentation/http/airport.routes.js";
 
-    return configureAirportRoutes(airportController)
-}
+export function initAirporModule(): Router { 
+
+    // Infrastructure
+    const prismaAirportRepo = new PrismaAirportRepository()
+
+    // Application (Use Cases)
+    const getAllAirportsUseCase = new GetAllAirportsUseCase(prismaAirportRepo);
+    const getAirportByIdUseCase = new GetAirportByIdUseCase(prismaAirportRepo);
+    const createAirportUseCase = new CreateAirportUseCase(prismaAirportRepo);
+    const updateAirportUseCase = new UpdateAirportUseCase(prismaAirportRepo);
+    const deleteAirportUseCase = new DeleteAirportUseCase(prismaAirportRepo);
+
+    const controller = new AirportController(getAllAirportsUseCase, getAirportByIdUseCase, createAirportUseCase, updateAirportUseCase, deleteAirportUseCase)
+
+    return configureAirportRoutes(controller)
+} 
