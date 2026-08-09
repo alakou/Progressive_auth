@@ -1,5 +1,8 @@
 import compression from 'compression';
 
+import cors from 'cors';
+import helmet from 'helmet';
+import hpp from 'hpp';
 
 import { rateLimiterGlobal } from './middlewares/rateLimiter.js';
 
@@ -13,7 +16,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { pinoHttp } from 'pino-http';
 import { pino_logger } from './config/logger.js';
 
-// import { env } from './config/env.js';
+import { env } from './config/env.js';
 
 export class App {
     public readonly instance: Application;
@@ -37,10 +40,18 @@ export class App {
         this.instance.use(pinoHttp({ logger: pino_logger }));
 
        
+         this.instance.use(helmet())
 
+        this.instance.use(cors({
+            origin: env.corsAllowedOrigin,
+            credentials: true
+
+        }))
 
         this.instance.use(express.json({limit: "10kb"}));
         this.instance.use(express.urlencoded({ extended: true }));
+
+        this.instance.use(hpp())
 
  
         this.instance.use(rateLimiterGlobal)
