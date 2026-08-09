@@ -10,4 +10,5 @@
  */
 export type * from './models/Airport.js'
 export type * from './models/Airline.js'
+export type * from './models/User.js'
 export type * from './commonInputTypes.js'

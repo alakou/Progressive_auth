@@ -27,3 +27,8 @@ export type Airport = Prisma.AirportModel
  * 
  */
 export type Airline = Prisma.AirlineModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel

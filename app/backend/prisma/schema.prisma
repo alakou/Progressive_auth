@@ -36,3 +36,21 @@ model Airline {
 
   @@map("airlines")
 }
+
+enum Role {
+  ADMIN
+  STAFF 
+  USER
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   // JAMAIS "password" en clair, le nom du champ le rappelle
+  role         Role     @default(USER)
+  refreshToken String?  // stocke le dernier refresh token valide (permet la révocation)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}

@@ -159,3 +159,9 @@ Continuous integration with Github Actions
 
 ##########################################################################################################
 https://eleven-labs.com/blog/clean-architecture/
+
+JWT GEN
+#node -e "console.log(require('crypto').randomBytes(32).toString('hex')"
+#node -e "console.log(require('crypto').randomBytes(64).toString('hex')"
+#node -e "console.log(require('crypto').randomBytes(128).toString('hex')"
+#node -e "console.log(require('crypto').randomBytes(256).toString('hex')"

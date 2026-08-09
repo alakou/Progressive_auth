@@ -5,7 +5,7 @@ export class AppError extends Error {
     constructor(statusCode: number, message: string) {
         super(message)
         this.statusCode = statusCode
-        this.isOperational = true
+        this.isOperational = true 
 
         Object.setPrototypeOf(this, new.target.prototype)
         //  Génère une stack trace propre, qui ne montre pas l’intérieur du constructeur, pour des logs plus lisibles.
@@ -18,7 +18,6 @@ export class NotFoundPage extends AppError {
         super(404, `${res} not found`)
     }
 }
-
 export class ConflictError extends AppError {
     constructor(message: string) {
         super(409, message)

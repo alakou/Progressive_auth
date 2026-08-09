@@ -7,3 +7,4 @@ app.instance.listen(env.port,"0.0.0.0", () => {
     console.log(`Server is running in [${env.nodeEnv.toUpperCase()}] node`);
     console.log(`url > localhost:${env.port}`);
 });
+ 
