@@ -10,4 +10,9 @@
  */
 export type * from './models/Airport.js'
 export type * from './models/Airline.js'
+export type * from './models/Aircraft.js'
+export type * from './models/Flight.js'
+export type * from './models/User.js'
+export type * from './models/Profile.js'
+export type * from './models/Booking.js'
 export type * from './commonInputTypes.js'

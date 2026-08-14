@@ -1,5 +1,8 @@
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { env } from "@/config/env.js";
+import bcrypt from "bcrypt"
+
 
 import { PrismaClient } from '../generated/prisma/client.js';
 console.log(process.env.DATABASE_URL);
@@ -9,6 +12,27 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({
   adapter
 });
+
+
+async function superadminSeed(): Promise<void> {
+  const email = env.superAdminEmail
+  const password = env.superAdminPwd
+
+  if (!email) throw new Error("Email is not defined")
+  if (!password) throw new Error("Password is not defined")
+
+  const seed = await bcrypt.genSalt(12)
+  const passwordHash = await bcrypt.hash(password, seed)
+  await prisma.user.upsert({
+    create: {
+      email,
+      passwordHash,
+      role: "ADMIN"
+    },
+    update: {},
+    where: { email }
+  })
+}
 // console.log(Object.keys(prisma));
 async function main() {
   // upsert plutôt que create : le seed reste rejouable sans dupliquer les données
@@ -34,7 +58,8 @@ async function main() {
     where: { icaoCode: 'AFR' },
   });
 
-  console.log('✅ Seed terminé');
+  await superadminSeed()
+
 }
 
 main()

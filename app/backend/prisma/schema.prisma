@@ -12,6 +12,32 @@ datasource db {
   provider = "postgresql"
 }
 
+//#############################################################################################
+enum Role {
+  ADMIN
+  STAFF
+  USER
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CHECKED_IN
+  CANCELLED
+}
+
+enum FlightStatus {
+  RAS
+  SCHEDULED
+  BOARDING
+  DEPARTED
+  DELAYED
+  CANCELLED
+  ARRIVED
+}
+
+//#############################################################################################
+
 model Airport {
   // UUID plutôt qu'auto-incrément : n'expose jamais le nombre total d'aéroports via l'URL
   id        String   @id @default(uuid())
@@ -21,6 +47,9 @@ model Airport {
   country   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  departingFlights Flight[] @relation("FlightDep")
+  arrivingFlights  Flight[] @relation("FlightArr")
 
   @@map("airports") // nom de table explicite en snake_case, convention SQL classique
 }
@@ -34,5 +63,99 @@ model Airline {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  aircrafts Aircraft[]
+  flights   Flight[]
+
   @@map("airlines")
+}
+
+model Aircraft {
+  id           String   @unique @default(uuid())
+  model        String
+  registration String   @unique
+  capacity     Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  flights Flight[]
+
+  airlineId String
+  airline   Airline @relation(fields: [airlineId], references: [id])
+
+  @@map("aircrafts")
+}
+
+model Flight {
+  id String @id @default(uuid())
+
+  bookings Booking[]
+
+  flightNumber       String       @unique @map("flight_num") // Numéro de vol (ex. SN1234)
+  scheduledDeparture DateTime     @map("scheduled_dep")
+  scheduledArrival   DateTime     @map("scheduled_arr")
+  status             FlightStatus @default(RAS)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  airlineId   String
+  airline     Airline  @relation(fields: [airlineId], references: [id])
+  aircraftId  String
+  aircraft    Aircraft @relation(fields: [aircraftId], references: [id])
+  depAiportId String
+  depAirport  Airport  @relation("FlightDep", fields: [depAiportId], references: [id])
+  arrAiportId String
+  arrAirport  Airport  @relation("FlightArr", fields: [arrAiportId], references: [id])
+
+  @@unique([airlineId, flightNumber, scheduledDeparture])
+  @@map("flights")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String // JAMAIS "password" en clair, le nom du champ le rappelle
+  role         Role     @default(USER)
+  refreshToken String? // stocke le dernier refresh token valide (permet la révocation)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  profile  Profile?
+  bookings Booking[]
+
+  @@map("users")
+}
+
+model Profile {
+  id String @id @default(uuid())
+
+  userId String @unique
+
+  firstName  String?  @map("first_name")
+  lastName   String?  @map("last_name")
+  profession String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
+}
+
+model Booking {
+  id String @id @default(uuid())
+
+  userId   String @unique
+  flightId String @unique
+
+  bookingRef String   @unique @map("booking_ref")
+  seatNum    String   @unique @map("seat_num") // ex: 12A
+  price      Decimal
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  flight Flight @relation(fields: [flightId], references: [id])
+
+  @@unique([flightId, seatNum])
+  @@map("bookings")
 }

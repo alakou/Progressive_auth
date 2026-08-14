@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AppError } from "@/errors/AppError.js";
 import { Prisma } from "../../generated/prisma/client.js";
 import { pino_logger } from "@/config/logger.js";
 
 
-export function errorHandler(err: Error, req: Request, res: Response): void {
+export function errorHandler(err: Error, req: Request, res: Response, _next: NextFunction): void {
     if (err instanceof AppError) {
         if (!err.isOperational) {
             pino_logger.error({ err }, 'Erreur non-opérationnelle interceptée (bug in application)')

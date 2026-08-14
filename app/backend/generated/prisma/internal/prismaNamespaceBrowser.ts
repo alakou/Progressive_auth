@@ -52,7 +52,12 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Airport: 'Airport',
-  Airline: 'Airline'
+  Airline: 'Airline',
+  Aircraft: 'Aircraft',
+  Flight: 'Flight',
+  User: 'User',
+  Profile: 'Profile',
+  Booking: 'Booking'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -95,6 +100,76 @@ export const AirlineScalarFieldEnum = {
 } as const
 
 export type AirlineScalarFieldEnum = (typeof AirlineScalarFieldEnum)[keyof typeof AirlineScalarFieldEnum]
+
+
+export const AircraftScalarFieldEnum = {
+  id: 'id',
+  model: 'model',
+  registration: 'registration',
+  capacity: 'capacity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  airlineId: 'airlineId'
+} as const
+
+export type AircraftScalarFieldEnum = (typeof AircraftScalarFieldEnum)[keyof typeof AircraftScalarFieldEnum]
+
+
+export const FlightScalarFieldEnum = {
+  id: 'id',
+  flightNumber: 'flightNumber',
+  scheduledDeparture: 'scheduledDeparture',
+  scheduledArrival: 'scheduledArrival',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  airlineId: 'airlineId',
+  aircraftId: 'aircraftId',
+  depAiportId: 'depAiportId',
+  arrAiportId: 'arrAiportId'
+} as const
+
+export type FlightScalarFieldEnum = (typeof FlightScalarFieldEnum)[keyof typeof FlightScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  passwordHash: 'passwordHash',
+  role: 'role',
+  refreshToken: 'refreshToken',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const ProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  profession: 'profession',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const BookingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  flightId: 'flightId',
+  bookingRef: 'bookingRef',
+  seatNum: 'seatNum',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
 
 
 export const SortOrder = {

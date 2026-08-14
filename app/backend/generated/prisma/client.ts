@@ -51,3 +51,28 @@ export type Airport = Prisma.AirportModel
  * 
  */
 export type Airline = Prisma.AirlineModel
+/**
+ * Model Aircraft
+ * 
+ */
+export type Aircraft = Prisma.AircraftModel
+/**
+ * Model Flight
+ * 
+ */
+export type Flight = Prisma.FlightModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model Profile
+ * 
+ */
+export type Profile = Prisma.ProfileModel
+/**
+ * Model Booking
+ * 
+ */
+export type Booking = Prisma.BookingModel
