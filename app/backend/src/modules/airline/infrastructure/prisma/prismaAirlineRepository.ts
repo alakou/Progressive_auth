@@ -7,14 +7,8 @@ import { ValidationError } from "@/errors/AppError.js";
 export class PrismaAirlineRepository implements IAirlineRepository {
     // Permet la suppression de la persistance
     private mapRecordToDomain(record: Airline): Airline {
-        const strictRecord = {
-            id: record.id,
-            icaoCode: record.icaoCode,
-            name: record.name,
-            country: record.country,
-            foundedIn: record.foundedIn
-        }
-        return new Airline(strictRecord)
+        const { id, icaoCode, name, country, foundedIn } = record
+        return new Airline({ id, icaoCode, name, country, foundedIn })
     }
 
 
@@ -32,7 +26,7 @@ export class PrismaAirlineRepository implements IAirlineRepository {
     }
 
     async findAirlineByIcaoCode(icaoCode: string): Promise<Airline | null> {
-        return  await prisma.airline.findUnique({ where: { icaoCode } })
+        return prisma.airline.findUnique({ where: { icaoCode } })
     }
 
     async createAirline(data: CreateAirlineDTO): Promise<Airline> {

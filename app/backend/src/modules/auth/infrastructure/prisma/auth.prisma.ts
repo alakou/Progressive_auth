@@ -12,9 +12,17 @@ export class UserAuthRepository implements IAuthRepository {
 
         const salt = await bcrypt.genSalt(12)
         const passwordHash = await bcrypt.hash(input.password, salt)
-
-        await prisma.user.create({ data: { email: input.email, passwordHash } })
-
+        await prisma.$transaction(async (tx) => {
+            const user = await tx.user.create(
+                {
+                    data:
+                    {
+                        email: input.email,
+                        passwordHash,
+                    }
+                })
+            await tx.profile.create({ data: { userId: user.id } })
+        })
     }
 
     async login(input: LoginSchemaInput): Promise<TokensType> {
@@ -47,6 +55,6 @@ export class UserAuthRepository implements IAuthRepository {
         }
 
         await prisma.user.update({ where: { id: user.id }, data: { refreshToken: null } })
-        
+
     }
 }

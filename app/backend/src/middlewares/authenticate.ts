@@ -8,7 +8,7 @@ export interface CustomerRequest extends Request {
     user?: TokenPayload
 }
 
-export function authenticate(req: CustomerRequest, res: Response, next: NextFunction): void {
+export function authenticate(req: CustomerRequest, _res: Response, next: NextFunction): void {
     const header = req.headers.authorization
     if(!header?.startsWith("Bearer ")) {
         throw new UnauthorizedError("Token manquant")

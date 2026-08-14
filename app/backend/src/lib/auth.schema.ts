@@ -7,7 +7,7 @@ const schema = {
         .min(8, "Le mot de passe doit contenir au moins 8 caractères")
         .regex(/[A-Z]/, "Le mot de passe doit contenir au moins une majuscule")
         .regex(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre"),
-    requireData: z.string().min(1, "Ce champs ne peut pas etre vide")
+    requireData: z.string().min(1, "Ce champs ne peut pas etre vide"),
 }
 
 export const registerSchema = z.object({

@@ -16,3 +16,26 @@ export const Role = {
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const BookingStatus = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  CHECKED_IN: 'CHECKED_IN',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus]
+
+
+export const FlightStatus = {
+  RAS: 'RAS',
+  SCHEDULED: 'SCHEDULED',
+  BOARDING: 'BOARDING',
+  DEPARTED: 'DEPARTED',
+  DELAYED: 'DELAYED',
+  CANCELLED: 'CANCELLED',
+  ARRIVED: 'ARRIVED'
+} as const
+
+export type FlightStatus = (typeof FlightStatus)[keyof typeof FlightStatus]

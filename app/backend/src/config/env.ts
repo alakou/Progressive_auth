@@ -11,6 +11,9 @@ class EnvConfiguration {
     public readonly jwtRefreshSecretExpiresIn = process.env.JWT_REFRESH_EXPIRES_IN || "7d"
     public readonly corsAllowedOrigin = process.env.CORS_ALLOWED_ORIGIN || 'http://localhost:5173';
 
+    public readonly superAdminEmail = process.env.SUPER_ADMIN_EMAIL || "super@admin.app"
+    public readonly superAdminPwd = process.env.SUPER_ADMIN_PWD || "" 
+
     public get isProd(): boolean {
         return this.nodeEnv === "prod";
     }

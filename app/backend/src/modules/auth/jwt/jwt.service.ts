@@ -19,10 +19,16 @@ export async function issueTokens(payload: TokenPayload): Promise<TokensType> {
     }
 
     const accessToken: string = jwt.sign(accessTokenPayload, env.jwtAccessSecret,
-        { expiresIn: env.jwtAccessSecretExpiresIn as jwt.SignOptions["expiresIn"] })
+        {
+            algorithm: "HS256",
+            expiresIn: env.jwtAccessSecretExpiresIn as jwt.SignOptions["expiresIn"]
+        })
 
     const refreshToken: string = jwt.sign(refreshTokenPayload, env.jwtRefreshSecret,
-        { expiresIn: env.jwtRefreshSecretExpiresIn as jwt.SignOptions["expiresIn"] })
+        {
+            algorithm: "HS256",
+            expiresIn: env.jwtRefreshSecretExpiresIn as jwt.SignOptions["expiresIn"]
+        })
 
     await prisma.user.update({ where: { id: payload.userId }, data: { refreshToken } });
 
